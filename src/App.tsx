@@ -20,14 +20,12 @@ function App() {
   ]);
   const [filter, setFilter] = useState('all');
 
-  function removeTask(id: string): void {
+  const removeTask = (id: string): void => {
     const filteredTasks = tasks.filter((item) => item.id !== id);
     setTasks(filteredTasks);
-  }
-  function filterTask(filterValue: FilterValueType): void {
-    setFilter(filterValue);
-  }
-  function addTask(title: string): void {
+  };
+  const filterTask = (filterValue: FilterValueType): void => setFilter(filterValue);
+  const addTask = (title: string): void => {
     const newTask = {
       id: v1(),
       title: title,
@@ -35,7 +33,7 @@ function App() {
     };
     const newTasks = [newTask, ...tasks];
     setTasks(newTasks);
-  }
+  };
 
   let displayTasks = tasks;
   if (filter === 'active') {
