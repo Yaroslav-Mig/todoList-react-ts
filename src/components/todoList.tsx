@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
 import { TaskType, FilterValueType } from '../App';
 
 type PropsType = {
@@ -12,18 +12,40 @@ type PropsType = {
 export function TodoList(props: PropsType) {
   const [title, setTitle] = useState('');
 
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setTitle(e.currentTarget.value);
+  };
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      addTask();
+    }
+  };
+  const addTask = (): void => {
+    props.addTask(title);
+    setTitle('');
+  };
+
+  const onFilterHandler = (e: MouseEvent<HTMLButtonElement>): void => {
+    const target = e.currentTarget;
+    switch (target.getAttribute('data-filter')) {
+      case 'all':
+        props.filterTask('all');
+        break;
+      case 'active':
+        props.filterTask('active');
+        break;
+      case 'completed':
+        props.filterTask('completed');
+        break;
+    }
+  };
+
   return (
     <div>
       <h3>{props.title}</h3>
       <div>
-        <input value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
-        <button
-          onClick={() => {
-            props.addTask(title);
-            setTitle('');
-          }}>
-          +
-        </button>
+        <input value={title} onChange={onChangeHandler} onKeyDown={onKeyDownHandler} />
+        <button onClick={addTask}>+</button>
       </div>
       <ul>
         {props.tasks.map((item) => {
@@ -37,9 +59,15 @@ export function TodoList(props: PropsType) {
         })}
       </ul>
       <div>
-        <button onClick={() => props.filterTask('all')}>All</button>
-        <button onClick={() => props.filterTask('active')}>Active</button>
-        <button onClick={() => props.filterTask('completed')}>Completed</button>
+        <button data-filter='all' onClick={onFilterHandler}>
+          All
+        </button>
+        <button data-filter='active' onClick={onFilterHandler}>
+          Active
+        </button>
+        <button data-filter='completed' onClick={onFilterHandler}>
+          Completed
+        </button>
       </div>
     </div>
   );
