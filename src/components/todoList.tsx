@@ -41,8 +41,8 @@ export function TodoList(props: PropsType) {
   };
 
   const tasksForTodoList = props.tasks.map((item) => {
-    const onRemoveHandler = () => props.removeTask(item.id);
-    const onStatusHandler = () => props.changeTaskStatus(item.id, item.isDone);
+    const onRemoveHandler = (): void => props.removeTask(item.id);
+    const onStatusHandler = (): void => props.changeTaskStatus(item.id, item.isDone);
     return (
       <li key={item.id}>
         <input type='checkbox' checked={item.isDone} onChange={onStatusHandler} />

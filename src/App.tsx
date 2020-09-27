@@ -26,7 +26,6 @@ function App() {
   };
   const changeStatus = (id: string, status: boolean): void => {
     const task = tasks.find((item) => item.id === id);
-    debugger;
     if (task) {
       task.isDone = !status;
       setTasks([...tasks]);
