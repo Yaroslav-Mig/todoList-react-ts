@@ -1,0 +1,10 @@
+.input_error {
+  outline: 1px solid rgb(255, 0, 0);
+  border: 1px solid rgb(255, 0, 0);
+}
+.message_error {
+  color: rgb(255, 0, 0);
+}
+.btn_active {
+  background-color: rgb(21, 197, 97);
+}
