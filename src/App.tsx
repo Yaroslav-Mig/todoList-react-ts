@@ -24,6 +24,15 @@ function App() {
     const filteredTasks = tasks.filter((item) => item.id !== id);
     setTasks(filteredTasks);
   };
+  const changeStatus = (id: string, status: boolean): void => {
+    const task = tasks.find((item) => item.id === id);
+    debugger;
+    if (task) {
+      task.isDone = !status;
+      setTasks([...tasks]);
+    }
+  };
+
   const filterTask = (filterValue: FilterValueType): void => setFilter(filterValue);
   const addTask = (title: string): void => {
     const newTask = {
@@ -51,6 +60,7 @@ function App() {
         removeTask={removeTask}
         filterTask={filterTask}
         addTask={addTask}
+        changeTaskStatus={changeStatus}
       />
       {/* <TodoList title='What to buy' tasks={shoppingList }/> */}
     </div>
