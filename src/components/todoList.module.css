@@ -1,12 +1,12 @@
 .input_error {
-  outline: 1px solid rgb(255, 0, 0);
-  border: 1px solid rgb(255, 0, 0);
+  border: 1px solid #ff4500;
+  outline: none;
 }
 .message_error {
-  color: rgb(255, 0, 0);
+  color: #ff4500;
 }
 .btn_active {
-  background-color: rgb(21, 197, 97);
+  background-color: #87ceeb;
 }
 .task_completed {
   opacity: 0.7;
