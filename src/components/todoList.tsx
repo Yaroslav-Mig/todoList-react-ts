@@ -23,11 +23,9 @@ export function TodoList(props: PropsType) {
   const [newTask, setNewTask] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-    setNewTask(e.currentTarget.value);
-    setError(null);
-  };
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => setNewTask(e.currentTarget.value);
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
+    setError(null);
     if (e.ctrlKey && e.key === 'Enter') {
       addTaskHandler();
     }
@@ -78,7 +76,7 @@ export function TodoList(props: PropsType) {
         />
         <button onClick={addTaskHandler}>+</button>
       </div>
-      {error && <p className={classes.message_error}>{error}</p>}
+      {error && <span className={classes.message_error}>{error}</span>}
       <ul>{mappedTasks}</ul>
       <div onClick={onFilterHandler}>
         <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all'>
