@@ -35,12 +35,14 @@ function App() {
     setTasks(filteredTasks);
   };
   const changeFilter = (filterValue: FilterValueType): void => setFilter(filterValue);
-  const changeStatus = (id: string, status: boolean): void => {
-    const task = tasks.find((task) => task.id === id);
-    if (task) {
-      task.isDone = !status;
-      setTasks([...tasks]);
-    }
+  const changeStatus = (id: string, newStatus: boolean): void => {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        task.isDone = newStatus;
+      }
+      return task;
+    });
+    setTasks(newTasks);
   };
 
   return (
