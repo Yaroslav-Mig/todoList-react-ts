@@ -40,9 +40,9 @@ export function TodoList(props: PropsType) {
       setError('Title is required');
     }
   };
-  const onFilterHandler = (e: MouseEvent<HTMLButtonElement>): void => {
-    const target = e.currentTarget;
-    switch (target.getAttribute('data-filter')) {
+  const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
+    const target = e.target as HTMLButtonElement;
+    switch (target.dataset.filter) {
       case 'all':
         changeFilter('all');
         break;
@@ -51,7 +51,6 @@ export function TodoList(props: PropsType) {
         break;
       case 'completed':
         changeFilter('completed');
-        break;
     }
   };
 
@@ -81,22 +80,14 @@ export function TodoList(props: PropsType) {
       </div>
       {error && <p className={classes.message_error}>{error}</p>}
       <ul>{mappedTasks}</ul>
-      <div>
-        <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all' onClick={onFilterHandler}>
+      <div onClick={onFilterHandler}>
+        <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all'>
           All
         </button>
-        <button
-          className={filterValue === 'active' ? classes.btn_active : ''}
-          data-filter='active'
-          onClick={onFilterHandler}
-        >
+        <button className={filterValue === 'active' ? classes.btn_active : ''} data-filter='active'>
           Active
         </button>
-        <button
-          className={filterValue === 'completed' ? classes.btn_active : ''}
-          data-filter='completed'
-          onClick={onFilterHandler}
-        >
+        <button className={filterValue === 'completed' ? classes.btn_active : ''} data-filter='completed'>
           Completed
         </button>
       </div>
