@@ -14,11 +14,12 @@ function App() {
   const [filter, setFilter] = useState<FilterValueType>('all');
   let tasksForTodoList = tasks;
 
-  if (filter === 'active') {
-    tasksForTodoList = tasks.filter((task) => task.isDone === false);
-  }
-  if (filter === 'completed') {
-    tasksForTodoList = tasks.filter((task) => task.isDone === true);
+  switch (filter) {
+    case 'completed':
+      tasksForTodoList = tasks.filter((task) => task.isDone);
+      break;
+    case 'active':
+      tasksForTodoList = tasks.filter((task) => !task.isDone);
   }
 
   const addTask = (title: string): void => {
