@@ -30,19 +30,16 @@ function App() {
     };
     const newTasks = [newTask, ...tasks];
     setTasks(newTasks);
-  };
+	};
+	
   const removeTask = (id: string): void => {
     const filteredTasks = tasks.filter((task) => task.id !== id);
     setTasks(filteredTasks);
   };
-  const changeFilter = (filterValue: FilterValueType): void => setFilter(filterValue);
-  const changeStatus = (id: string, newStatus: boolean): void => {
-    const newTasks = tasks.map((task) => {
-      if (task.id === id) {
-        task.isDone = newStatus;
-      }
-      return task;
-    });
+	const changeFilter = (filterValue: FilterValueType): void => setFilter(filterValue);
+
+  const changeTaskStatus = (id: string, newStatus: boolean): void => {
+    const newTasks = tasks.map((task) => (task.id === id ? { ...task, isDone: newStatus } : task));
     setTasks(newTasks);
   };
 
@@ -55,7 +52,7 @@ function App() {
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}
-        changeTaskStatus={changeStatus}
+        changeTaskStatus={changeTaskStatus}
       />
     </div>
   );
