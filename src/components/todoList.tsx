@@ -1,7 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
-import { AddItemForm } from './AddItemForm';
-import classes from './TodoList.module.css';
 import { TodoListHeader } from './TodoListHeader';
+import { AddItemForm } from './AddItemForm';
+import { ButtonsFilter } from './ButtonsFilter';
+import classes from './TodoList.module.css';
 
 export type TaskType = {
   id: string;
@@ -23,20 +24,6 @@ type PropsType = {
 export function TodoList(props: PropsType) {
   const { title, tasks, filterValue, removeTask, changeFilter, addTask, changeTaskStatus } = props;
 
-  const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
-    const target = e.target as HTMLButtonElement;
-    switch (target.dataset.filter) {
-      case 'all':
-        changeFilter('all');
-        break;
-      case 'active':
-        changeFilter('active');
-        break;
-      case 'completed':
-        changeFilter('completed');
-    }
-  };
-
   const mappedTasks = tasks.map((task) => {
     const onRemoveHandler = (): void => removeTask(task.id);
     const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -54,22 +41,9 @@ export function TodoList(props: PropsType) {
   return (
     <div>
       <TodoListHeader title={title} />
-			<AddItemForm addTask={addTask}/>
+      <AddItemForm addTask={addTask} />
       <ul>{mappedTasks}</ul>
-      <div onClick={onFilterHandler}>
-        <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all'>
-          All
-        </button>
-        <button className={filterValue === 'active' ? classes.btn_active : ''} data-filter='active'>
-          Active
-        </button>
-        <button
-          className={filterValue === 'completed' ? classes.btn_active : ''}
-          data-filter='completed'
-        >
-          Completed
-        </button>
-      </div>
+      <ButtonsFilter filterValue={filterValue} changeFilter={changeFilter} />
     </div>
   );
 }
