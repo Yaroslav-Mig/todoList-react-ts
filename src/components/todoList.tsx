@@ -1,4 +1,5 @@
 import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
+import { AddItemForm } from './AddItemForm';
 import classes from './TodoList.module.css';
 import { TodoListHeader } from './TodoListHeader';
 
@@ -21,25 +22,7 @@ type PropsType = {
 
 export function TodoList(props: PropsType) {
   const { title, tasks, filterValue, removeTask, changeFilter, addTask, changeTaskStatus } = props;
-  const [newTask, setNewTask] = useState<string>('');
-  const [error, setError] = useState<null | string>(null);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void =>
-    setNewTask(e.currentTarget.value);
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
-    setError(null);
-    if (e.ctrlKey && e.key === 'Enter') {
-      addTaskHandler();
-    }
-  };
-  const addTaskHandler = (): void => {
-    if (newTask.trim()) {
-      addTask(newTask.trim());
-      setNewTask('');
-    } else {
-      setError('Title is required');
-    }
-  };
   const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLButtonElement;
     switch (target.dataset.filter) {
@@ -71,16 +54,7 @@ export function TodoList(props: PropsType) {
   return (
     <div>
       <TodoListHeader title={title} />
-      <div>
-        <input
-          className={error ? classes.input_error : ''}
-          value={newTask}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDownHandler}
-        />
-        <button onClick={addTaskHandler}>+</button>
-      </div>
-      {error && <span className={classes.message_error}>{error}</span>}
+			<AddItemForm addTask={addTask}/>
       <ul>{mappedTasks}</ul>
       <div onClick={onFilterHandler}>
         <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all'>
