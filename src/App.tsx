@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
-import { TodoList, TaskType, FilterValueType } from './components/todoList';
+import { TodoList, TaskType, FilterValueType } from './components/TodoList';
 import './App.css';
 
 const getFilteredTasks = (tasks: Array<TaskType>, filter: string) => {

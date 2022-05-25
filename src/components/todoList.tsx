@@ -1,5 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
-import classes from './todoList.module.css';
+import classes from './TodoList.module.css';
+import { TodoListHeader } from './TodoListHeader';
 
 export type TaskType = {
   id: string;
@@ -23,7 +24,8 @@ export function TodoList(props: PropsType) {
   const [newTask, setNewTask] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => setNewTask(e.currentTarget.value);
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void =>
+    setNewTask(e.currentTarget.value);
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
     setError(null);
     if (e.ctrlKey && e.key === 'Enter') {
@@ -54,9 +56,9 @@ export function TodoList(props: PropsType) {
 
   const mappedTasks = tasks.map((task) => {
     const onRemoveHandler = (): void => removeTask(task.id);
-		const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-			changeTaskStatus(task.id, e.currentTarget.checked);
-		}
+    const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+      changeTaskStatus(task.id, e.currentTarget.checked);
+    };
     return (
       <li key={task.id}>
         <input type='checkbox' checked={task.isDone} onChange={onStatusHandler} />
@@ -68,7 +70,7 @@ export function TodoList(props: PropsType) {
 
   return (
     <div>
-      <h3>{title}</h3>
+      <TodoListHeader title={title} />
       <div>
         <input
           className={error ? classes.input_error : ''}
@@ -87,7 +89,10 @@ export function TodoList(props: PropsType) {
         <button className={filterValue === 'active' ? classes.btn_active : ''} data-filter='active'>
           Active
         </button>
-        <button className={filterValue === 'completed' ? classes.btn_active : ''} data-filter='completed'>
+        <button
+          className={filterValue === 'completed' ? classes.btn_active : ''}
+          data-filter='completed'
+        >
           Completed
         </button>
       </div>
