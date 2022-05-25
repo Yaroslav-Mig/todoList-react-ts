@@ -12,9 +12,15 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
   const [error, setError] = useState<null | string>(null);
 
 	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.currentTarget.value);
-		setError('');
-	}
+		const eventVal = e.currentTarget.value;
+		if (eventVal.trim()) {
+			setTitle(eventVal);
+			setError('');
+		} else {
+			setTitle(eventVal);
+			setError(null);
+		}
+  };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.ctrlKey && e.key === 'Enter') {
@@ -32,16 +38,21 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
     }
   };
 
+  const inputClass = error ? s.input_error : '';
+  const disabledBtn = (error === null || error) ? true : false;
+
   return (
     <>
       <div>
         <input
-          className={error ? s.input_error : ''}
+          className={inputClass}
           value={title}
           onChange={onChangeTitleHandler}
           onKeyDown={onKeyPressHandler}
         />
-        <button onClick={addTitleHandler}>+</button>
+        <button onClick={addTitleHandler} disabled={disabledBtn}>
+          +
+        </button>
       </div>
       {error && <span className={s.message_error}>{error}</span>}
     </>
