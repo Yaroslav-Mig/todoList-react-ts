@@ -1,5 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
-import classes from './todoList.module.css';
+import React from 'react';
+import { TodoListHeader } from './TodoListHeader';
+import { AddItemForm } from './AddItemForm';
+import { ButtonsFilter } from './ButtonsFilter';
+import { TodoListTasks } from './TodoListTasks';
 
 export type TaskType = {
   id: string;
@@ -20,77 +23,13 @@ type PropsType = {
 
 export function TodoList(props: PropsType) {
   const { title, tasks, filterValue, removeTask, changeFilter, addTask, changeTaskStatus } = props;
-  const [newTask, setNewTask] = useState<string>('');
-  const [error, setError] = useState<null | string>(null);
-
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => setNewTask(e.currentTarget.value);
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
-    setError(null);
-    if (e.ctrlKey && e.key === 'Enter') {
-      addTaskHandler();
-    }
-  };
-  const addTaskHandler = (): void => {
-    if (newTask.trim()) {
-      addTask(newTask.trim());
-      setNewTask('');
-    } else {
-      setError('Title is required');
-    }
-  };
-  const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
-    const target = e.target as HTMLButtonElement;
-    switch (target.dataset.filter) {
-      case 'all':
-        changeFilter('all');
-        break;
-      case 'active':
-        changeFilter('active');
-        break;
-      case 'completed':
-        changeFilter('completed');
-    }
-  };
-
-  const mappedTasks = tasks.map((task) => {
-    const onRemoveHandler = (): void => removeTask(task.id);
-		const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-			changeTaskStatus(task.id, e.currentTarget.checked);
-		}
-    return (
-      <li key={task.id}>
-        <input type='checkbox' checked={task.isDone} onChange={onStatusHandler} />
-        <span className={task.isDone ? classes.task_completed : ''}>{task.title}</span>
-        <button onClick={onRemoveHandler}>x</button>
-      </li>
-    );
-  });
 
   return (
     <div>
-      <h3>{title}</h3>
-      <div>
-        <input
-          className={error ? classes.input_error : ''}
-          value={newTask}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDownHandler}
-        />
-        <button onClick={addTaskHandler}>+</button>
-      </div>
-      {error && <span className={classes.message_error}>{error}</span>}
-      <ul>{mappedTasks}</ul>
-      <div onClick={onFilterHandler}>
-        <button className={filterValue === 'all' ? classes.btn_active : ''} data-filter='all'>
-          All
-        </button>
-        <button className={filterValue === 'active' ? classes.btn_active : ''} data-filter='active'>
-          Active
-        </button>
-        <button className={filterValue === 'completed' ? classes.btn_active : ''} data-filter='completed'>
-          Completed
-        </button>
-      </div>
+      <TodoListHeader title={title} />
+      <AddItemForm addTask={addTask} />
+      <TodoListTasks tasks={tasks} removeTask={removeTask} changeTaskStatus={changeTaskStatus} />
+      <ButtonsFilter filterValue={filterValue} changeFilter={changeFilter} />
     </div>
   );
 }

@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
-import { TodoList, TaskType, FilterValueType } from './components/todoList';
+import { TodoList, TaskType, FilterValueType } from './components/TodoList';
 import './App.css';
+
+const getFilteredTasks = (tasks: Array<TaskType>, filter: string) => {
+  switch (filter) {
+    case 'completed':
+      return (tasks = tasks.filter((task) => task.isDone));
+    case 'active':
+      return (tasks = tasks.filter((task) => !task.isDone));
+  }
+  return tasks;
+};
 
 function App() {
   const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -12,15 +22,6 @@ function App() {
     { id: v1(), title: 'Angular', isDone: false },
   ]);
   const [filter, setFilter] = useState<FilterValueType>('all');
-  let tasksForTodoList = tasks;
-
-  switch (filter) {
-    case 'completed':
-      tasksForTodoList = tasks.filter((task) => task.isDone);
-      break;
-    case 'active':
-      tasksForTodoList = tasks.filter((task) => !task.isDone);
-  }
 
   const addTask = (title: string): void => {
     const newTask = {
@@ -30,24 +31,27 @@ function App() {
     };
     const newTasks = [newTask, ...tasks];
     setTasks(newTasks);
-	};
-	
+  };
+
   const removeTask = (id: string): void => {
     const filteredTasks = tasks.filter((task) => task.id !== id);
     setTasks(filteredTasks);
   };
-	const changeFilter = (filterValue: FilterValueType): void => setFilter(filterValue);
+
+  const changeFilter = (filterValue: FilterValueType): void => setFilter(filterValue);
 
   const changeTaskStatus = (id: string, newStatus: boolean): void => {
     const newTasks = tasks.map((task) => (task.id === id ? { ...task, isDone: newStatus } : task));
     setTasks(newTasks);
   };
 
+  const filteredTasks = getFilteredTasks(tasks, filter);
+
   return (
     <div className='App'>
       <TodoList
         title='What to learn'
-        tasks={tasksForTodoList}
+        tasks={filteredTasks}
         filterValue={filter}
         removeTask={removeTask}
         changeFilter={changeFilter}
