@@ -12,24 +12,25 @@ export type TaskType = {
 export type FilterValueType = 'all' | 'active' | 'completed';
 
 type PropsType = {
+  todoListId: string;
   title: string;
   tasks: Array<TaskType>;
-  filterValue: FilterValueType;
+  filter: FilterValueType;
   removeTask: (id: string) => void;
-  changeFilter: (value: FilterValueType) => void;
+  changeTaskFilter: (todoListId: string, value: FilterValueType) => void;
   addTask: (title: string) => void;
   changeTaskStatus: (id: string, status: boolean) => void;
 };
 
 export function TodoList(props: PropsType) {
-  const { title, tasks, filterValue, removeTask, changeFilter, addTask, changeTaskStatus } = props;
+  const { todoListId, title, tasks, filter, removeTask, changeTaskFilter, addTask, changeTaskStatus } = props;
 
   return (
     <div>
       <TodoListHeader title={title} />
       <AddItemForm addTask={addTask} />
       <TodoListTasks tasks={tasks} removeTask={removeTask} changeTaskStatus={changeTaskStatus} />
-      <ButtonsFilter filterValue={filterValue} changeFilter={changeFilter} />
+			<ButtonsFilter todoListId={todoListId} filter={filter} changeTaskFilter={changeTaskFilter} />
     </div>
   );
 }
