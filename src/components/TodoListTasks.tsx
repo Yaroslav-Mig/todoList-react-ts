@@ -3,17 +3,18 @@ import { TaskType } from './TodoList';
 import s from './TodoList.module.css';
 
 type TodoListTasksProps = {
+	todoListId: string;
 	tasks: Array<TaskType>;
-	removeTask: (id: string) => void;
+	removeTask: (todoListId: string, id: string) => void;
 	changeTaskStatus: (id: string, status: boolean) => void;
 }
 
 export const TodoListTasks: FC<TodoListTasksProps> = (props) => {
 
-	const { tasks, removeTask, changeTaskStatus } = props;
+	const { todoListId, tasks, removeTask, changeTaskStatus } = props;
 
 	const mappedTasks = tasks.map((task) => {
-    const onRemoveHandler = (): void => removeTask(task.id);
+    const onRemoveHandler = (): void => removeTask(todoListId, task.id);
     const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
       changeTaskStatus(task.id, e.currentTarget.checked);
 		};

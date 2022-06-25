@@ -59,9 +59,9 @@ function App(): JSX.Element {
     setTasks({...tasks, [todoListId]: newTasks});
   };
 
-  const removeTask = (id: string): void => {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    setTasks(filteredTasks);
+	const removeTask = (todoListId: string, id: string): void => {
+    const filteredTasks = tasks[todoListId].filter((task) => task.id !== id);
+    setTasks({...tasks,[todoListId]: filteredTasks});
   };
 
   const changeTaskFilter = (todoListId: string, filter: FilterValueType): void => {
