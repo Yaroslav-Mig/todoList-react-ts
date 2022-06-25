@@ -69,9 +69,9 @@ function App(): JSX.Element {
     setTodoLists(updatedTodoLists);
   };
 
-  const changeTaskStatus = (id: string, newStatus: boolean): void => {
-    const newTasks = tasks.map((task) => (task.id === id ? { ...task, isDone: newStatus } : task));
-    setTasks(newTasks);
+	const changeTaskStatus = (todoListId: string, id: string, isDone: boolean): void => {
+    const updatedTasks = tasks[todoListId].map((task) => (task.id === id ? { ...task, isDone } : task));
+		setTasks({...tasks, [todoListId]:updatedTasks});
   };
 
 	const mappedTodoLists = todoLists.map((tl: TodoListType): JSX.Element => {

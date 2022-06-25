@@ -1,25 +1,25 @@
-import React, { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC } from 'react';
 import { TaskType } from './TodoList';
 import s from './TodoList.module.css';
 
 type TodoListTasksProps = {
-	todoListId: string;
-	tasks: Array<TaskType>;
-	removeTask: (todoListId: string, id: string) => void;
-	changeTaskStatus: (id: string, status: boolean) => void;
-}
+  todoListId: string;
+  tasks: Array<TaskType>;
+  removeTask: (todoListId: string, id: string) => void;
+  changeTaskStatus: (todoListId: string, id: string, status: boolean) => void;
+};
 
 export const TodoListTasks: FC<TodoListTasksProps> = (props) => {
-
 	const { todoListId, tasks, removeTask, changeTaskStatus } = props;
 
-	const mappedTasks = tasks.map((task) => {
-    const onRemoveHandler = (): void => removeTask(todoListId, task.id);
-    const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-      changeTaskStatus(task.id, e.currentTarget.checked);
-		};
+	const mappedTasks = tasks.map((task): JSX.Element => {
 
-		const taskClass = task.isDone ? s.task_completed : ''
+		const onRemoveHandler = (): void => removeTask(todoListId, task.id);
+    const onStatusHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+      changeTaskStatus(todoListId, task.id, e.currentTarget.checked);
+    };
+
+    const taskClass = task.isDone ? s.task_completed : '';
 
     return (
       <li key={task.id}>
@@ -30,7 +30,5 @@ export const TodoListTasks: FC<TodoListTasksProps> = (props) => {
     );
   });
 
-	return (
-		<ul>{mappedTasks}</ul>
-	)
-}
+  return <ul>{mappedTasks}</ul>;
+};
