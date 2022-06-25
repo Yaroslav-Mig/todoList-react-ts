@@ -20,6 +20,7 @@ type PropsType = {
   changeTaskFilter: (todoListId: string, value: FilterValueType) => void;
   addTask: (todoListId: string, title: string) => void;
   changeTaskStatus: (todoListId: string, id: string, status: boolean) => void;
+  removeTodoList: (todoListId: string) => void;
 };
 
 export function TodoList(props: PropsType) {
@@ -32,11 +33,12 @@ export function TodoList(props: PropsType) {
     changeTaskFilter,
     addTask,
     changeTaskStatus,
+    removeTodoList,
   } = props;
 
   return (
     <div>
-      <TodoListHeader title={title} />
+      <TodoListHeader todoListId={todoListId} title={title} removeTodoList={removeTodoList} />
       <AddItemForm todoListId={todoListId} addTask={addTask} />
       <TodoListTasks
         todoListId={todoListId}

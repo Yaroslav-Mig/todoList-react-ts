@@ -49,6 +49,17 @@ function App(): JSX.Element {
     ],
   });
 
+  //TODO: Functions for todoLists
+
+	const removeTodoList = (todoListId: string): void => {
+		const filteredTodoLists = todoLists.filter((tl) => tl.id !== todoListId);
+		setTodoLists(filteredTodoLists);
+		const { [todoListId]: removedTasks, ...restTasks } = tasks;
+		setTasks(restTasks);
+	};
+
+  //TODO: Functions for tasks
+
   const addTask = (todoListId: string, title: string): void => {
     const newTask = {
       id: v1(),
@@ -75,7 +86,6 @@ function App(): JSX.Element {
   };
 
 	const mappedTodoLists = todoLists.map((tl: TodoListType): JSX.Element => {
-
     const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter);
 
     return (
@@ -88,7 +98,8 @@ function App(): JSX.Element {
         removeTask={removeTask}
         changeTaskFilter={changeTaskFilter}
         addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
+				changeTaskStatus={changeTaskStatus}
+				removeTodoList={removeTodoList}
       />
     );
   });
