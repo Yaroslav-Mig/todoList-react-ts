@@ -3,7 +3,7 @@ import { FilterValueType } from './TodoList';
 import s from './TodoList.module.css';
 
 type ButtonsFilterProps = {
-	todoListId: string;
+  todoListId: string;
   filter: FilterValueType;
   changeTaskFilter: (todoListId: string, value: FilterValueType) => void;
 };
@@ -15,13 +15,13 @@ export const ButtonsFilter: FC<ButtonsFilterProps> = (props) => {
     const target = e.target as HTMLButtonElement;
     switch (target.dataset.filter) {
       case 'all':
-        changeTaskFilter(todoListId,'all');
+        changeTaskFilter(todoListId, 'all');
         break;
       case 'active':
-        changeTaskFilter(todoListId,'active');
+        changeTaskFilter(todoListId, 'active');
         break;
       case 'completed':
-        changeTaskFilter(todoListId,'completed');
+        changeTaskFilter(todoListId, 'completed');
     }
   };
 

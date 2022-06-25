@@ -2,25 +2,25 @@ import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import s from './TodoList.module.css';
 
 type AddItemFormProps = {
-	todoListId: string;
+  todoListId: string;
   addTask: (todoListId: string, title: string) => void;
 };
 
 export const AddItemForm: FC<AddItemFormProps> = (props) => {
-  const {todoListId, addTask } = props;
+  const { todoListId, addTask } = props;
 
   const [title, setTitle] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
 
-	const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-		const eventVal = e.currentTarget.value;
-		if (eventVal.trim()) {
-			setTitle(eventVal);
-			setError('');
-		} else {
-			setTitle(eventVal);
-			setError(null);
-		}
+  const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    const eventVal = e.currentTarget.value;
+    if (eventVal.trim()) {
+      setTitle(eventVal);
+      setError('');
+    } else {
+      setTitle(eventVal);
+      setError(null);
+    }
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
@@ -31,7 +31,7 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
 
   const addTitleHandler = (): void => {
     if (title.trim()) {
-      addTask(todoListId,title.trim());
+      addTask(todoListId, title.trim());
       setTitle('');
       setError(null);
     } else {

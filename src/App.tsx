@@ -51,12 +51,12 @@ function App(): JSX.Element {
 
   //TODO: Functions for todoLists
 
-	const removeTodoList = (todoListId: string): void => {
-		const filteredTodoLists = todoLists.filter((tl) => tl.id !== todoListId);
-		setTodoLists(filteredTodoLists);
-		const { [todoListId]: removedTasks, ...restTasks } = tasks;
-		setTasks(restTasks);
-	};
+  const removeTodoList = (todoListId: string): void => {
+    const filteredTodoLists = todoLists.filter((tl) => tl.id !== todoListId);
+    setTodoLists(filteredTodoLists);
+    const { [todoListId]: removedTasks, ...restTasks } = tasks;
+    setTasks(restTasks);
+  };
 
   //TODO: Functions for tasks
 
@@ -67,12 +67,12 @@ function App(): JSX.Element {
       isDone: false,
     };
     const newTasks = [newTask, ...tasks[todoListId]];
-    setTasks({...tasks, [todoListId]: newTasks});
+    setTasks({ ...tasks, [todoListId]: newTasks });
   };
 
-	const removeTask = (todoListId: string, id: string): void => {
+  const removeTask = (todoListId: string, id: string): void => {
     const filteredTasks = tasks[todoListId].filter((task) => task.id !== id);
-    setTasks({...tasks,[todoListId]: filteredTasks});
+    setTasks({ ...tasks, [todoListId]: filteredTasks });
   };
 
   const changeTaskFilter = (todoListId: string, filter: FilterValueType): void => {
@@ -80,12 +80,14 @@ function App(): JSX.Element {
     setTodoLists(updatedTodoLists);
   };
 
-	const changeTaskStatus = (todoListId: string, id: string, isDone: boolean): void => {
-    const updatedTasks = tasks[todoListId].map((task) => (task.id === id ? { ...task, isDone } : task));
-		setTasks({...tasks, [todoListId]:updatedTasks});
+  const changeTaskStatus = (todoListId: string, id: string, isDone: boolean): void => {
+		const updatedTasks = tasks[todoListId].map((task) =>
+			task.id === id ? { ...task, isDone } : task
+    );
+    setTasks({ ...tasks, [todoListId]: updatedTasks });
   };
 
-	const mappedTodoLists = todoLists.map((tl: TodoListType): JSX.Element => {
+  const mappedTodoLists = todoLists.map((tl: TodoListType): JSX.Element => {
     const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter);
 
     return (
@@ -98,8 +100,8 @@ function App(): JSX.Element {
         removeTask={removeTask}
         changeTaskFilter={changeTaskFilter}
         addTask={addTask}
-				changeTaskStatus={changeTaskStatus}
-				removeTodoList={removeTodoList}
+        changeTaskStatus={changeTaskStatus}
+        removeTodoList={removeTodoList}
       />
     );
   });
