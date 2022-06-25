@@ -49,14 +49,14 @@ function App(): JSX.Element {
     ],
   });
 
-  const addTask = (title: string): void => {
+  const addTask = (todoListId: string, title: string): void => {
     const newTask = {
       id: v1(),
-      title: title,
+      title,
       isDone: false,
     };
-    const newTasks = [newTask, ...tasks];
-    setTasks(newTasks);
+    const newTasks = [newTask, ...tasks[todoListId]];
+    setTasks({...tasks, [todoListId]: newTasks});
   };
 
   const removeTask = (id: string): void => {
@@ -75,7 +75,7 @@ function App(): JSX.Element {
   };
 
 	const mappedTodoLists = todoLists.map((tl: TodoListType): JSX.Element => {
-		
+
     const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter);
 
     return (
