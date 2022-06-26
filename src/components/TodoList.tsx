@@ -34,12 +34,14 @@ export function TodoList(props: PropsType) {
     addTask,
     changeTaskStatus,
     removeTodoList,
-  } = props;
+	} = props;
+
+	const addItem = (title: string): void => addTask(todoListId, title);
 
   return (
     <div>
       <TodoListHeader todoListId={todoListId} title={title} removeTodoList={removeTodoList} />
-      <AddItemForm todoListId={todoListId} addTask={addTask} />
+      <AddItemForm addItem={addItem} />
       <TodoListTasks
         todoListId={todoListId}
         tasks={tasks}

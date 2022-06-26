@@ -2,12 +2,11 @@ import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import s from './TodoList.module.css';
 
 type AddItemFormProps = {
-  todoListId: string;
-  addTask: (todoListId: string, title: string) => void;
+  addItem: (title: string) => void;
 };
 
 export const AddItemForm: FC<AddItemFormProps> = (props) => {
-  const { todoListId, addTask } = props;
+  const { addItem } = props;
 
   const [title, setTitle] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
@@ -31,7 +30,7 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
 
   const addTitleHandler = (): void => {
     if (title.trim()) {
-      addTask(todoListId, title.trim());
+      addItem(title.trim());
       setTitle('');
       setError(null);
     } else {
@@ -43,7 +42,7 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
   const disabledBtn = (error === null || error) ? true : false;
 
   return (
-    <>
+    <div className={s.input_box}>
       <div>
         <input
           className={inputClass}
@@ -56,6 +55,6 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
         </button>
       </div>
       {error && <span className={s.message_error}>{error}</span>}
-    </>
+    </div>
   );
 };

@@ -1,3 +1,7 @@
+.input_box {
+	display: flex;
+	flex-flow: column wrap;
+}
 .input_error {
   border: 1px solid #ff4500;
   outline: none;
