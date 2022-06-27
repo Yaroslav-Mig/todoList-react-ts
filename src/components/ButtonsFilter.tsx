@@ -3,30 +3,31 @@ import { FilterValueType } from './TodoList';
 import s from './TodoList.module.css';
 
 type ButtonsFilterProps = {
-  filterValue: FilterValueType;
-  changeFilter: (value: FilterValueType) => void;
+  todoListId: string;
+  filter: FilterValueType;
+  changeTaskFilter: (todoListId: string, value: FilterValueType) => void;
 };
 
 export const ButtonsFilter: FC<ButtonsFilterProps> = (props) => {
-  const { filterValue, changeFilter } = props;
+  const { todoListId, filter, changeTaskFilter } = props;
 
   const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
     const target = e.target as HTMLButtonElement;
     switch (target.dataset.filter) {
       case 'all':
-        changeFilter('all');
+        changeTaskFilter(todoListId, 'all');
         break;
       case 'active':
-        changeFilter('active');
+        changeTaskFilter(todoListId, 'active');
         break;
       case 'completed':
-        changeFilter('completed');
+        changeTaskFilter(todoListId, 'completed');
     }
   };
 
-  const btnAllClass = filterValue === 'all' ? s.btn_active : '';
-  const btnActiveClass = filterValue === 'active' ? s.btn_active : '';
-  const btnCompletedClass = filterValue === 'completed' ? s.btn_active : '';
+  const btnAllClass = filter === 'all' ? s.btn_active : '';
+  const btnActiveClass = filter === 'active' ? s.btn_active : '';
+  const btnCompletedClass = filter === 'completed' ? s.btn_active : '';
 
   return (
     <div onClick={onFilterHandler}>
