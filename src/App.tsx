@@ -70,6 +70,11 @@ function App(): JSX.Element {
     setTasks(restTasks);
   };
 
+  const changeTodoListTitle = (todoListId: string, title: string) => {
+    const updatedTodoLists = todoLists.map((tl) => (tl.id === todoListId ? { ...tl, title } : tl));
+    setTodoLists(updatedTodoLists);
+  };
+
   //TODO: Functions for tasks
 
   const addTask = (todoListId: string, title: string): void => {
@@ -115,9 +120,10 @@ function App(): JSX.Element {
         removeTask={removeTask}
         changeTaskFilter={changeTaskFilter}
         addTask={addTask}
-				changeTaskStatus={changeTaskStatus}
-				changeTaskTitle={changeTaskTitle}
-        removeTodoList={removeTodoList}
+        changeTaskStatus={changeTaskStatus}
+        changeTaskTitle={changeTaskTitle}
+				removeTodoList={removeTodoList}
+				changeTodoListTitle={changeTodoListTitle}
       />
     );
   });
