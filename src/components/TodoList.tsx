@@ -19,7 +19,8 @@ type PropsType = {
   removeTask: (todoListId: string, id: string) => void;
   changeTaskFilter: (todoListId: string, value: FilterValueType) => void;
   addTask: (todoListId: string, title: string) => void;
-  changeTaskStatus: (todoListId: string, id: string, status: boolean) => void;
+	changeTaskStatus: (todoListId: string, id: string, status: boolean) => void;
+	changeTaskTitle: (todoListId: string, id: string, title: string) => void;
   removeTodoList: (todoListId: string) => void;
 };
 
@@ -32,7 +33,8 @@ export function TodoList(props: PropsType) {
     removeTask,
     changeTaskFilter,
     addTask,
-    changeTaskStatus,
+		changeTaskStatus,
+		changeTaskTitle,
     removeTodoList,
 	} = props;
 
@@ -46,7 +48,8 @@ export function TodoList(props: PropsType) {
         todoListId={todoListId}
         tasks={tasks}
         removeTask={removeTask}
-        changeTaskStatus={changeTaskStatus}
+				changeTaskStatus={changeTaskStatus}
+				changeTaskTitle={changeTaskTitle}
       />
       <ButtonsFilter todoListId={todoListId} filter={filter} changeTaskFilter={changeTaskFilter} />
     </div>

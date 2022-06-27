@@ -93,9 +93,12 @@ function App(): JSX.Element {
   };
 
   const changeTaskStatus = (todoListId: string, id: string, isDone: boolean): void => {
-		const updatedTasks = tasks[todoListId].map((task) =>
-			task.id === id ? { ...task, isDone } : task
-    );
+    const updatedTasks = tasks[todoListId].map((task) => (task.id === id ? { ...task, isDone } : task));
+    setTasks({ ...tasks, [todoListId]: updatedTasks });
+  };
+
+  const changeTaskTitle = (todoListId: string, id: string, title: string): void => {
+    const updatedTasks = tasks[todoListId].map((task) => (task.id === id ? { ...task, title } : task));
     setTasks({ ...tasks, [todoListId]: updatedTasks });
   };
 
@@ -112,7 +115,8 @@ function App(): JSX.Element {
         removeTask={removeTask}
         changeTaskFilter={changeTaskFilter}
         addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
+				changeTaskStatus={changeTaskStatus}
+				changeTaskTitle={changeTaskTitle}
         removeTodoList={removeTodoList}
       />
     );
