@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
-import s from './TodoList.module.css';
+import { Button, TextField } from '@material-ui/core';
+import { styles as st } from './styles';
 
 type AddItemFormProps = {
   addItem: (title: string) => void;
@@ -13,6 +14,7 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
 
   const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     const eventVal = e.currentTarget.value;
+
     if (eventVal.trim()) {
       setTitle(eventVal);
       setError('');
@@ -34,27 +36,35 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
       setTitle('');
       setError(null);
     } else {
-      setError('Title is required');
+      setError('Error, text is required');
     }
   };
 
-  const inputClass = error ? s.input_error : '';
-  const disabledBtn = (error === null || error) ? true : false;
+  const labelBtn = error ? error : 'Write here';
+  const disabledBtn = error === null || error ? true : false;
 
   return (
-    <div className={s.input_box}>
-      <div>
-        <input
-          className={inputClass}
-          value={title}
-          onChange={onChangeTitleHandler}
-          onKeyDown={onKeyPressHandler}
-        />
-        <button onClick={addTitleHandler} disabled={disabledBtn}>
-          +
-        </button>
-      </div>
-      {error && <span className={s.message_error}>{error}</span>}
+    <div style={st.AddItemForm}>
+			<TextField
+        type='text'
+        variant='filled'
+        size='small'
+        error={!!error}
+        label={labelBtn}
+        value={title}
+        onChange={onChangeTitleHandler}
+        onKeyDown={onKeyPressHandler}
+      />
+      <Button
+        style={st.Button}
+        title='push button or ctrl+Enter to add task'
+        variant='contained'
+        color='primary'
+        onClick={addTitleHandler}
+        disabled={disabledBtn}
+      >
+        +
+      </Button>
     </div>
   );
 };

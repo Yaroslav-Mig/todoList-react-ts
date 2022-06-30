@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import { TodoList, TaskType, FilterValueType } from './components/TodoList';
+import { AddItemForm } from './components/addItemForm/AddItemForm';
 import './App.css';
-import { AddItemForm } from './components/AddItemForm';
 
 type TodoListType = {
   id: string;

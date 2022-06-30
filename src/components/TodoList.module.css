@@ -1,13 +1,9 @@
-.input_box {
+.input_wrap {
 	display: flex;
 	flex-flow: column wrap;
-}
-.input_error {
-  border: 1px solid #ff4500;
-  outline: none;
-}
-.message_error {
-  color: #ff4500;
+	box-sizing: border-box;
+	max-width: 250px;
+	width: 100%;
 }
 .btn_active {
   background-color: #87ceeb;

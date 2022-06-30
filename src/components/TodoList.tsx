@@ -1,6 +1,6 @@
 import React from 'react';
 import { TodoListHeader } from './TodoListHeader';
-import { AddItemForm } from './AddItemForm';
+import { AddItemForm } from './addItemForm/AddItemForm';
 import { ButtonsFilter } from './ButtonsFilter';
 import { TodoListTasks } from './TodoListTasks';
 
