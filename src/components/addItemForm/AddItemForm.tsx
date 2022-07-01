@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
+import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 import { styles as st } from './styles';
 
 type AddItemFormProps = {
@@ -56,14 +57,16 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
         onKeyDown={onKeyPressHandler}
       />
       <Button
-        style={st.Button}
+				style={st.Button}
+				aria-label='add'
         title='push button or ctrl+Enter to add task'
         variant='contained'
-        color='primary'
-        onClick={addTitleHandler}
+				color='primary'
+				startIcon={<AddBoxTwoToneIcon/>}
         disabled={disabledBtn}
+        onClick={addTitleHandler}
       >
-        +
+        Add
       </Button>
     </div>
   );

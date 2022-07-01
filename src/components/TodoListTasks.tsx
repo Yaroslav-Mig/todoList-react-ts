@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FC } from 'react';
 import { EditableSpan } from './EditableSpan';
 import { TaskType } from './TodoList';
+import { Checkbox, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import s from './TodoList.module.css';
 
 type TodoListTasksProps = {
@@ -21,20 +23,28 @@ export const TodoListTasks: FC<TodoListTasksProps> = (props) => {
       changeTaskStatus(todoListId, task.id, e.currentTarget.checked);
     };
 
-		const changeTitle = (newTitle: string): void => changeTaskTitle(todoListId, task.id, newTitle);
-		
+    const changeTitle = (newTitle: string): void => changeTaskTitle(todoListId, task.id, newTitle);
+
     const taskClass = task.isDone ? s.task_completed : '';
 
     return (
-      <li key={task.id}>
-        <input type='checkbox' checked={task.isDone} onChange={onStatusHandler} />
-        <span className={taskClass}>
+      <ListItem key={task.id} selected dense>
+        <Checkbox color='primary' size='small' checked={task.isDone} onChange={onStatusHandler} />
+        <ListItemText className={taskClass}>
           <EditableSpan title={task.title} changeTitle={changeTitle} />
-        </span>
-        <button onClick={onRemoveHandler}>x</button>
-      </li>
+        </ListItemText>
+        <IconButton
+          title='delete'
+          aria-label='delete'
+          size='small'
+          edge='end'
+          onClick={onRemoveHandler}
+        >
+          <DeleteForeverIcon fontSize='small' />
+        </IconButton>
+      </ListItem>
     );
   });
 
-  return <ul>{mappedTasks}</ul>;
+  return <List>{mappedTasks}</List>;
 };

@@ -1,13 +1,6 @@
-.input_wrap {
-	display: flex;
-	flex-flow: column wrap;
-	box-sizing: border-box;
-	max-width: 250px;
-	width: 100%;
-}
 .btn_active {
   background-color: #87ceeb;
 }
 .task_completed {
-  opacity: 0.7;
+	color: #3f51b5;
 }

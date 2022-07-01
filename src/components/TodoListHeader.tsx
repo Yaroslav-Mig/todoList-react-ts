@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { EditableSpan } from './EditableSpan';
+import { IconButton, Typography } from '@material-ui/core';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 
 type TodoListHeaderProps = {
   todoListId: string;
@@ -15,9 +17,15 @@ export const TodoListHeader: FC<TodoListHeaderProps> = (props) => {
   const changeTitle = (newTitle: string): void => changeTodoListTitle(todoListId, newTitle);
 
   return (
-    <h3>
+    <Typography variant='h6' align='center'>
       <EditableSpan title={title} changeTitle={changeTitle} />
-      <button onClick={onRemoveHandler}>x</button>
-    </h3>
+			<IconButton
+				title='delete'
+				aria-label='delete'
+				size='small'
+				onClick={onRemoveHandler}>
+				<BackspaceIcon fontSize='small' />
+      </IconButton>
+    </Typography>
   );
 };
