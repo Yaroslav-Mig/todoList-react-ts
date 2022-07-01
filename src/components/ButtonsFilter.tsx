@@ -1,6 +1,6 @@
 import React, { FC, MouseEvent } from 'react';
 import { FilterValueType } from './TodoList';
-import s from './TodoList.module.css';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 type ButtonsFilterProps = {
   todoListId: string;
@@ -12,7 +12,8 @@ export const ButtonsFilter: FC<ButtonsFilterProps> = (props) => {
   const { todoListId, filter, changeTaskFilter } = props;
 
   const onFilterHandler = (e: MouseEvent<HTMLDivElement>): void => {
-    const target = e.target as HTMLButtonElement;
+		const target = e.target as HTMLButtonElement;
+
     switch (target.dataset.filter) {
       case 'all':
         changeTaskFilter(todoListId, 'all');
@@ -25,21 +26,21 @@ export const ButtonsFilter: FC<ButtonsFilterProps> = (props) => {
     }
   };
 
-  const btnAllClass = filter === 'all' ? s.btn_active : '';
-  const btnActiveClass = filter === 'active' ? s.btn_active : '';
-  const btnCompletedClass = filter === 'completed' ? s.btn_active : '';
+  const btnAllColor = filter === 'all' ? 'primary' : 'default';
+  const btnActiveColor = filter === 'active' ? 'primary' : 'default';
+  const btnCompletedColor = filter === 'completed' ? 'primary' : 'default';
 
   return (
-    <div onClick={onFilterHandler}>
-      <button className={btnAllClass} data-filter='all'>
+    <ButtonGroup variant='contained' size='small' onClick={onFilterHandler}>
+			<Button color={btnAllColor} data-filter='all'>
         All
-      </button>
-      <button className={btnActiveClass} data-filter='active'>
+      </Button>
+      <Button color={btnActiveColor} data-filter='active'>
         Active
-      </button>
-      <button className={btnCompletedClass} data-filter='completed'>
+      </Button>
+      <Button color={btnCompletedColor} data-filter='completed'>
         Completed
-      </button>
-    </div>
-  );
+      </Button>
+    </ButtonGroup>
+	);
 };
