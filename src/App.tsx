@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import { TodoList, TaskType, FilterValueType } from './components/TodoList';
-import { AddItemForm } from './components/addItemForm/AddItemForm';
+import { AddItemForm } from './components/AddItemForm';
 import {
   AppBar,
   Button,
@@ -28,7 +28,10 @@ type TasksStateType = {
 };
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+	createStyles({
+		root: {
+			padding: theme.spacing(3),
+		},
     flexGrow: {
       flexGrow: 1,
     },
@@ -39,12 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     grid: {
-      padding: theme.spacing(3),
+			maxWidth: '350px',
+			width:'100%',
 		},
 		paper: {
 			display: 'flex',
 			flexFlow: 'column',
 			padding: theme.spacing(2),
+			boxSizing: 'border-box',
 			'& > *': {
 				width: '100%',
       },
@@ -150,7 +155,7 @@ function App(): JSX.Element {
     const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter);
 
     return (
-      <Grid key={tl.id} item md={3}>
+      <Grid key={tl.id} className={classes.grid} item xs={12} sm={6} md={4} lg={3} >
         <Paper className={classes.paper} elevation={3}>
           <TodoList
             todoListId={tl.id}
@@ -186,15 +191,15 @@ function App(): JSX.Element {
         </Toolbar>
       </AppBar>
 
-      <Container className={classes.grid} maxWidth='lg'>
-        <Grid className={classes.flexGrow} container spacing={3}>
+      <Container className={classes.root} maxWidth='lg'>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.padding} elevation={3}>
               <AddItemForm addItem={addTodoList} />
             </Paper>
           </Grid>
         </Grid>
-        <Grid className={classes.flexGrow} container spacing={3}>
+        <Grid className={classes.flexGrow} container justifyContent={'center'} spacing={3}>
           {mappedTodoLists}
         </Grid>
       </Container>

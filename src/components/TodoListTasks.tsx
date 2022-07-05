@@ -3,7 +3,7 @@ import { EditableSpan } from './EditableSpan';
 import { TaskType } from './TodoList';
 import { Checkbox, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import s from './TodoList.module.css';
+import st from './TodoList.module.css';
 
 type TodoListTasksProps = {
   todoListId: string;
@@ -25,12 +25,12 @@ export const TodoListTasks: FC<TodoListTasksProps> = (props) => {
 
     const changeTitle = (newTitle: string): void => changeTaskTitle(todoListId, task.id, newTitle);
 
-    const taskClass = task.isDone ? s.task_completed : '';
+    const taskClass = task.isDone ? st.task_completed : '';
 
     return (
       <ListItem key={task.id} selected dense>
         <Checkbox color='primary' size='small' checked={task.isDone} onChange={onStatusHandler} />
-        <ListItemText className={taskClass}>
+        <ListItemText className={taskClass} disableTypography>
           <EditableSpan title={task.title} changeTitle={changeTitle} />
         </ListItemText>
         <IconButton

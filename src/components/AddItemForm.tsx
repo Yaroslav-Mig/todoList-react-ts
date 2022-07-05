@@ -1,14 +1,25 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, createStyles, makeStyles, TextField } from '@material-ui/core';
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
-import { styles as st } from './styles';
+import st from './TodoList.module.css';
 
 type AddItemFormProps = {
   addItem: (title: string) => void;
 };
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    button: {
+			padding: '5px',
+			lineHeight: '1rem',
+			borderRadius: '0px 0px 4px 4px',
+    },
+  })
+);
+
 export const AddItemForm: FC<AddItemFormProps> = (props) => {
   const { addItem } = props;
+  const classes = useStyles();
 
   const [title, setTitle] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
@@ -45,8 +56,8 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
   const disabledBtn = error === null || error ? true : false;
 
   return (
-    <div style={st.AddItemForm}>
-			<TextField
+    <div className={st.btnAdd_box}>
+      <TextField
         type='text'
         variant='filled'
         size='small'
@@ -56,13 +67,13 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
         onChange={onChangeTitleHandler}
         onKeyDown={onKeyPressHandler}
       />
-      <Button
-				style={st.Button}
-				aria-label='add'
+			<Button
+				className={classes.button}
+        aria-label='add'
         title='push button or ctrl+Enter to add task'
         variant='contained'
-				color='primary'
-				startIcon={<AddBoxTwoToneIcon/>}
+        color='primary'
+        startIcon={<AddBoxTwoToneIcon />}
         disabled={disabledBtn}
         onClick={addTitleHandler}
       >
