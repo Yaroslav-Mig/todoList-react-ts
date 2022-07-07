@@ -1,4 +1,6 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
+import { TextField } from '@material-ui/core';
+import st from './TodoList.module.css';
 
 type EditableSpanProps = {
   title: string;
@@ -33,8 +35,11 @@ export const EditableSpan: FC<EditableSpanProps> = (props) => {
 	}
 
   return editMode ? (
-    <input
-      type='text'
+    <TextField
+			type='text'
+			size='small'
+			maxRows={4}
+			multiline
       autoFocus
       value={newTitle}
 			onBlur={offEditModeHandler}
@@ -42,6 +47,6 @@ export const EditableSpan: FC<EditableSpanProps> = (props) => {
 			onKeyDown={onKeyChangeTitleHandler}
     />
   ) : (
-    <span onDoubleClick={onEditModeHandler}>{title}</span>
+    <span className={st.task_item} onDoubleClick={onEditModeHandler}>{title}</span>
   );
 };

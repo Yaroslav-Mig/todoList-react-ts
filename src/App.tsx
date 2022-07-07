@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import { TodoList, TaskType, FilterValueType } from './components/TodoList';
-import './App.css';
 import { AddItemForm } from './components/AddItemForm';
+import {
+  AppBar,
+  Button,
+  createStyles,
+  IconButton,
+  makeStyles,
+  Toolbar,
+  Typography,
+  Theme,
+  Container,
+  Grid,
+  Paper,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 type TodoListType = {
   id: string;
@@ -13,6 +26,36 @@ type TodoListType = {
 type TasksStateType = {
   [todoListId: string]: Array<TaskType>;
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			padding: theme.spacing(3),
+		},
+    flexGrow: {
+      flexGrow: 1,
+    },
+    padding: {
+      padding: theme.spacing(2),
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    grid: {
+			maxWidth: '350px',
+			width:'100%',
+		},
+		paper: {
+			display: 'flex',
+			flexFlow: 'column',
+			padding: theme.spacing(2),
+			boxSizing: 'border-box',
+			'& > *': {
+				width: '100%',
+      },
+    },
+  })
+);
 
 const getFilteredTasks = (tasks: Array<TaskType>, filter: string) => {
   switch (filter) {
@@ -25,6 +68,7 @@ const getFilteredTasks = (tasks: Array<TaskType>, filter: string) => {
 };
 
 function App(): JSX.Element {
+  const classes = useStyles();
   const todoListId1 = v1();
   const todoListId2 = v1();
 
@@ -111,27 +155,54 @@ function App(): JSX.Element {
     const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter);
 
     return (
-      <TodoList
-        key={tl.id}
-        todoListId={tl.id}
-        title={tl.title}
-        tasks={filteredTasks}
-        filter={tl.filter}
-        removeTask={removeTask}
-        changeTaskFilter={changeTaskFilter}
-        addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
-        changeTaskTitle={changeTaskTitle}
-				removeTodoList={removeTodoList}
-				changeTodoListTitle={changeTodoListTitle}
-      />
+      <Grid key={tl.id} className={classes.grid} item xs={12} sm={6} md={4} lg={3} >
+        <Paper className={classes.paper} elevation={3}>
+          <TodoList
+            todoListId={tl.id}
+            title={tl.title}
+            tasks={filteredTasks}
+            filter={tl.filter}
+            removeTask={removeTask}
+            changeTaskFilter={changeTaskFilter}
+            addTask={addTask}
+            changeTaskStatus={changeTaskStatus}
+            changeTaskTitle={changeTaskTitle}
+            removeTodoList={removeTodoList}
+            changeTodoListTitle={changeTodoListTitle}
+          />
+        </Paper>
+      </Grid>
     );
   });
 
   return (
     <div className='App'>
-      <AddItemForm addItem={addTodoList} />
-      {mappedTodoLists}
+      <AppBar position='static'>
+        <Toolbar className={classes.flexGrow}>
+          <IconButton className={classes.menuButton} edge='start' color='inherit' aria-label='menu'>
+            <MenuIcon />
+          </IconButton>
+          <Typography className={classes.flexGrow} variant='h6'>
+            TodoLists
+          </Typography>
+          <Button color='inherit' variant='outlined'>
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      <Container className={classes.root} maxWidth='lg'>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.padding} elevation={3}>
+              <AddItemForm addItem={addTodoList} />
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid className={classes.flexGrow} container justifyContent={'center'} spacing={3}>
+          {mappedTodoLists}
+        </Grid>
+      </Container>
     </div>
   );
 }

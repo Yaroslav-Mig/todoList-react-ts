@@ -1,18 +1,32 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
-import s from './TodoList.module.css';
+import { Button, createStyles, makeStyles, TextField } from '@material-ui/core';
+import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
+import st from './TodoList.module.css';
 
 type AddItemFormProps = {
   addItem: (title: string) => void;
 };
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    button: {
+			padding: '5px',
+			lineHeight: '1rem',
+			borderRadius: '0px 0px 4px 4px',
+    },
+  })
+);
+
 export const AddItemForm: FC<AddItemFormProps> = (props) => {
   const { addItem } = props;
+  const classes = useStyles();
 
   const [title, setTitle] = useState<string>('');
   const [error, setError] = useState<null | string>(null);
 
   const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     const eventVal = e.currentTarget.value;
+
     if (eventVal.trim()) {
       setTitle(eventVal);
       setError('');
@@ -34,27 +48,37 @@ export const AddItemForm: FC<AddItemFormProps> = (props) => {
       setTitle('');
       setError(null);
     } else {
-      setError('Title is required');
+      setError('Error, text is required');
     }
   };
 
-  const inputClass = error ? s.input_error : '';
-  const disabledBtn = (error === null || error) ? true : false;
+  const labelBtn = error ? error : 'Write here';
+  const disabledBtn = error === null || error ? true : false;
 
   return (
-    <div className={s.input_box}>
-      <div>
-        <input
-          className={inputClass}
-          value={title}
-          onChange={onChangeTitleHandler}
-          onKeyDown={onKeyPressHandler}
-        />
-        <button onClick={addTitleHandler} disabled={disabledBtn}>
-          +
-        </button>
-      </div>
-      {error && <span className={s.message_error}>{error}</span>}
+    <div className={st.btnAdd_box}>
+      <TextField
+        type='text'
+        variant='filled'
+        size='small'
+        error={!!error}
+        label={labelBtn}
+        value={title}
+        onChange={onChangeTitleHandler}
+        onKeyDown={onKeyPressHandler}
+      />
+			<Button
+				className={classes.button}
+        aria-label='add'
+        title='push button or ctrl+Enter to add task'
+        variant='contained'
+        color='primary'
+        startIcon={<AddBoxTwoToneIcon />}
+        disabled={disabledBtn}
+        onClick={addTitleHandler}
+      >
+        Add
+      </Button>
     </div>
   );
 };

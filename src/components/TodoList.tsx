@@ -43,7 +43,7 @@ export function TodoList(props: PropsType) {
   const addItem = (title: string): void => addTask(todoListId, title);
 
   return (
-    <div>
+    <>
       <TodoListHeader
         todoListId={todoListId}
         title={title}
@@ -59,6 +59,6 @@ export function TodoList(props: PropsType) {
         changeTaskTitle={changeTaskTitle}
       />
       <ButtonsFilter todoListId={todoListId} filter={filter} changeTaskFilter={changeTaskFilter} />
-    </div>
+    </>
   );
 }
