@@ -3,6 +3,7 @@ import { TodoListHeader } from './TodoListHeader';
 import { AddItemForm } from './AddItemForm';
 import { ButtonsFilter } from './ButtonsFilter';
 import { TodoListTasks } from './TodoListTasks';
+import { Typography } from '@material-ui/core';
 
 export type TaskType = {
   id: string;
@@ -51,14 +52,26 @@ export function TodoList(props: PropsType) {
         changeTodoListTitle={changeTodoListTitle}
       />
       <AddItemForm addItem={addItem} />
-      <TodoListTasks
-        todoListId={todoListId}
-        tasks={tasks}
-        removeTask={removeTask}
-        changeTaskStatus={changeTaskStatus}
-        changeTaskTitle={changeTaskTitle}
-      />
-      <ButtonsFilter todoListId={todoListId} filter={filter} changeTaskFilter={changeTaskFilter} />
+      {tasks.length ? (
+        <>
+          <TodoListTasks
+            todoListId={todoListId}
+            tasks={tasks}
+            removeTask={removeTask}
+            changeTaskStatus={changeTaskStatus}
+            changeTaskTitle={changeTaskTitle}
+          />
+          <ButtonsFilter
+            todoListId={todoListId}
+            filter={filter}
+            changeTaskFilter={changeTaskFilter}
+          />
+        </>
+      ) : (
+        <Typography color='error' align='center' variant='body1'>
+          There are no tasks
+        </Typography>
+      )}
     </>
   );
 }
