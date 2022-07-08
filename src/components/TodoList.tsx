@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { TodoListHeader } from './TodoListHeader';
 import { AddItemForm } from './AddItemForm';
 import { ButtonsFilter } from './ButtonsFilter';
@@ -26,7 +26,7 @@ type PropsType = {
   changeTodoListTitle: (todoListId: string, title: string) => void;
 };
 
-export function TodoList(props: PropsType) {
+export const TodoList: FC<PropsType> = (props) => {
   const {
     todoListId,
     title,

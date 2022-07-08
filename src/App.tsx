@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const getFilteredTasks = (tasks: Array<TaskType>, filter: string) => {
+const getFilteredTasks = (tasks: Array<TaskType>, filter: string): Array<TaskType> => {
   switch (filter) {
     case 'completed':
       return (tasks = tasks.filter((task) => task.isDone));
@@ -176,7 +176,7 @@ function App(): JSX.Element {
   });
 
   return (
-    <div className='App'>
+    <div>
       <AppBar position='static'>
         <Toolbar className={classes.flexGrow}>
           <IconButton className={classes.menuButton} edge='start' color='inherit' aria-label='menu'>
